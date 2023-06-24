@@ -1,75 +1,79 @@
-import React, { useState } from "react";
 import { data } from "./../data/data";
+import { useState } from "react";
 
 const Food = () => {
-  console.log(data);
   const [food, setFood] = useState(data);
+  const newList = [...new Set(data.map((item) => item.category))];
+  const newList2 = [...new Set(data.map((item) => item.price))];
+  const filterType = (category) => {
+    const filteredFood = data.filter((item) => item.category === category);
+    setFood(filteredFood);
+  };
+  const filterPrice = (price) => {
+    const filteredFood = data.filter((item) => item.price === price);
+    setFood(filteredFood);
+  };
+
   return (
-    <div className="max-w-[1140px] m-auto py-12 p-4 ">
-      <h1 className="text-orange-500 font-bold text-center text-4xl ">
-        Top Rated Menu Items
+    <div className="max-w-[1124px] m-auto">
+      <h1 className="text-center text-4xl">
+        Top Rated Menu <span className="text-orange-500">Items</span>
       </h1>
-      {/*row flex */}
-      <div className="flex flex-col lg:flex-row justify-between">
-        {/*Filter type */}
-        <div className="p-4">
-          <p>Select type</p>
-          <div className="flex justify-between flex-wrap">
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
+      {/* buttons */}
+      <div className="p-4 flex flex-col lg:flex-row justify-between">
+        {/* type */}
+        <div>
+          <h1>Filter Items</h1>
+          <div>
+            <button
+              onClick={() => setFood(data)}
+              className="p-2 text-white m-2 bg-orange-500 hover:bg-orange-900 rounded-full"
+            >
               All
             </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              Burger
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              Sandwich
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              Pizza
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              Hamburger
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold sm:my-2 py-2 px-4 rounded-full">
-              Steak
-            </button>
+            {newList.map((item) => (
+              <button
+                onClick={() => filterType(item)}
+                className="p-2 text-white m-2 bg-orange-500 hover:bg-orange-900 rounded-full"
+                key={item}
+              >
+                {item}
+              </button>
+            ))}
           </div>
         </div>
-        {/*Filter by price*/}
-        <div className="p-4">
-          <p>Select Prize</p>
-          <div className="flex justify-between flex-wrap ">
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              $
+        {/* price */}
+        <div>
+          <h1>Filter Price</h1>
+          {newList2.map((item) => (
+            <button
+              onClick={() => filterPrice(item)}
+              className="p-2 text-white m-2 bg-orange-500 hover:bg-orange-900 rounded-full"
+              key={item}
+            >
+              {item}
             </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              $$
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              $$$
-            </button>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
-              $$$$
-            </button>
-          </div>
+          ))}
         </div>
       </div>
-      {/*Display foods */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
-        {food.map((items) => (
+      {/* Show foods */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+        {food.map((item) => (
           <div
-            key={items.id}
-            className="border shadow-lg hover:scale-105 duration-300"
+            key={item.id}
+            className="border shadow-lg hover:scale-105 duration-300 rounded-2xl"
           >
             <img
-              className="w-full h-[200px] object-cover"
-              src={items.image}
-              alt={items.name}
-            ></img>
-            <div>
-              <p>{items.name}</p>
+              className="w-full h-[200px] object-cover rounded-t-2xl"
+              src={item.image}
+              alt={item.name}
+            />
+            <div className="flex justify-between p-4 bg-gray-700 text-white rounded-b-xl">
+              <p>{item.name}</p>
               <p>
-                <span>{items.price}</span>
+                <span className="bg-orange-500 p-2 rounded-full m-1">
+                  {item.price}
+                </span>
               </p>
             </div>
           </div>
