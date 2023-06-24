@@ -12,7 +12,7 @@ const Food = () => {
       {/*row flex */}
       <div className="flex flex-col lg:flex-row justify-between">
         {/*Filter type */}
-        <div>
+        <div className="p-4">
           <p>Select type</p>
           <div className="flex justify-between flex-wrap">
             <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
@@ -36,7 +36,7 @@ const Food = () => {
           </div>
         </div>
         {/*Filter by price*/}
-        <div>
+        <div className="p-4">
           <p>Select Prize</p>
           <div className="flex justify-between flex-wrap ">
             <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full">
@@ -57,8 +57,15 @@ const Food = () => {
       {/*Display foods */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
         {food.map((items) => (
-          <div key={items.id}>
-            <img src={items.image} alt={items.name}></img>
+          <div
+            key={items.id}
+            className="border shadow-lg hover:scale-105 duration-300"
+          >
+            <img
+              className="w-full h-[200px] object-cover"
+              src={items.image}
+              alt={items.name}
+            ></img>
             <div>
               <p>{items.name}</p>
               <p>
